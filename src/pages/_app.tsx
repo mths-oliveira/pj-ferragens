@@ -4,6 +4,11 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { theme } from '../styles/theme';
 import { Header } from '../components/app/header';
 import { Footer } from '../components/app/footer';
+import { Navbar } from '../components/app/navbar';
+import { ShoppingCartContextProvider } from '../contexts/shopping-cart';
+import { ProductsContextProvider } from '../contexts/products';
+import { ProductModal } from '../components/app/product-modal';
+import { UserContextProvider } from '../contexts/user';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -32,9 +37,17 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         />
       </Head>
       <ChakraProvider resetCSS theme={theme}>
-        <Header />
-        <Component {...pageProps} />
-        <Footer />
+        <ProductsContextProvider>
+          <ShoppingCartContextProvider>
+            <UserContextProvider>
+              <Navbar />
+              <ProductModal />
+              <Header />
+              <Component {...pageProps} />
+              <Footer />
+            </UserContextProvider>
+          </ShoppingCartContextProvider>
+        </ProductsContextProvider>
       </ChakraProvider>
     </>
   );

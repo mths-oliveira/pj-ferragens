@@ -1,0 +1,32 @@
+[
+  {
+    "image": "/fechaduras_e_acessorios.jpg",
+    "href": "/categorias/fechaduras_e_acessorios",
+    "title": "Fechaduras e acessórios"
+  },
+  {
+    "image": "/ferragens_em_geral.jpeg",
+    "href": "/categorias/ferragens_em_geral",
+    "title": "Ferragens em geral"
+  },
+  {
+    "image": "/ferragens_para_janelas.jpeg",
+    "href": "/categorias/ferragens_para_janelas",
+    "title": "Ferragens para janelas"
+  },
+  {
+    "image": "/ferragens_para_portas.jpg",
+    "href": "/categorias/ferragens_para_portas",
+    "title": "Ferragens para portas"
+  },
+  {
+    "image": "/pecas_para_moveis.jpg",
+    "href": "/categorias/pecas_para_moveis",
+    "title": "Peças para móveis"
+  },
+  {
+    "image": "/utilidades_domesticas.jpg",
+    "href": "/categorias/utilidades_domesticas",
+    "title": "Utilidades domésticas"
+  }
+]

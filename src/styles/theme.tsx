@@ -24,16 +24,27 @@ export const theme = extendTheme({
     heading: `'Roboto', sans-serif`,
   },
   fontSizes: {
-    sm: '1rem',
+    xs: '1rem',
+    sm: '1.125rem',
     md: '1.25rem',
     lg: '2.25rem',
     xl: '2.5rem',
   },
   sizes: {
-    xs: '15rem',
-    sm: '22.5rem',
+    xs: '15.5rem',
+    md: '22.5rem',
+  },
+  shadows: {
+    outline: '0 0 0 2px #0000FF99',
   },
   radii: {
     sm: '5px',
+  },
+  styles: {
+    global: {
+      ul: {
+        listStyleType: 'none',
+      },
+    },
   },
 });
