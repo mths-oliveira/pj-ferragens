@@ -47,10 +47,14 @@ export function Search({ isOpen, onClose }: Props) {
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <Stack
         spacing="1rem"
-        maxHeight={['100vh', 'calc(100vh - 10rem)', 'calc(100vh - 10rem)']}
+        maxHeight={[
+          'calc(100vh - 2.25rem)',
+          'calc(100vh - 10rem)',
+          'calc(100vh - 10rem)',
+        ]}
       >
         <SearchInput onChange={handleChange} onClick={onClose} />
         <List paddingY="0.75rem">

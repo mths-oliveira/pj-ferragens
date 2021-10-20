@@ -13,17 +13,11 @@ export interface DisclosureProps {
 
 interface ModalProps extends DisclosureProps {
   children: ReactNode;
-  isCentered?: boolean;
 }
 
-export function Modal({ isOpen, isCentered, onClose, children }: ModalProps) {
+export function Modal({ isOpen, onClose, children }: ModalProps) {
   return (
-    <ChakraModal
-      isOpen={isOpen}
-      onClose={onClose}
-      motionPreset="scale"
-      isCentered={isCentered}
-    >
+    <ChakraModal isOpen={isOpen} onClose={onClose} motionPreset="scale">
       <ModalOverlay />
       <ModalContent
         bg="transparent"
@@ -31,7 +25,12 @@ export function Modal({ isOpen, isCentered, onClose, children }: ModalProps) {
         boxShadow="none"
         position="relative"
       >
-        <ModalBody padding="0" maxHeight="100vh" overflowY="auto">
+        <ModalBody
+          padding="0"
+          marginTop="3.5rem"
+          maxHeight="calc(100vh - 3.5rem)"
+          overflowY="auto"
+        >
           {children}
         </ModalBody>
       </ModalContent>

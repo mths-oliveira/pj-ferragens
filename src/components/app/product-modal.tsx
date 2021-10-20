@@ -41,7 +41,7 @@ export function ProductModal() {
   }, [product]);
 
   return (
-    <Modal isOpen={productModal.isOpen} onClose={onClose} isCentered>
+    <Modal isOpen={productModal.isOpen} onClose={onClose}>
       <CloseButton onClick={onClose} />
       {product && (
         <Form
