@@ -13,6 +13,8 @@ import {
 } from '../../../../utils/hooks/useToast';
 import { useUserContext } from '../../../../contexts/user';
 import { User } from '../../../../backend/entities/user';
+import { Spiner } from '../../../spiner';
+import { useState } from 'react';
 
 interface SignInProps {
   email: string;
@@ -23,8 +25,10 @@ export function SignIn() {
   const form = useForm<SignInProps>(handleSubmit);
   const createToast = useToast(defaultToastOptions);
   const userContext = useUserContext();
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleSubmit({ email, password }: SignInProps) {
+    setIsLoading(true);
     const response = await api.post<User>('/sign-in', {
       email,
       password,
@@ -35,9 +39,15 @@ export function SignIn() {
         status: 'error',
         description: response.data,
       });
-      return;
+    } else {
+      createToast({
+        title: 'Sucesso',
+        status: 'success',
+        description: `Olá, ${response.data.name}`,
+      });
+      userContext.setUser(response.data);
     }
-    userContext.setUser(response.data);
+    setIsLoading(false);
   }
 
   function handleClick() {
@@ -62,7 +72,9 @@ export function SignIn() {
         >
           Registre-se
         </AlternativeAction>
-        <SubmitButton fontSize="1.25rem">Entrar</SubmitButton>
+        <SubmitButton fontSize="1.25rem">
+          {isLoading ? <Spiner /> : 'Entrar'}
+        </SubmitButton>
       </Stack>
     </Form>
   );

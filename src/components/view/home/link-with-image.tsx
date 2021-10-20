@@ -10,7 +10,16 @@ interface LinkWithImageProps {
 export function LinkWithImage({ href, label, src }: LinkWithImageProps) {
   return (
     <InternalLink href={href}>
-      <Box position="relative" borderRadius="sm" overflow="hidden">
+      <Box
+        position="relative"
+        borderRadius="sm"
+        overflow="hidden"
+        _hover={{
+          '& > div > p': {
+            textDecoration: 'underline',
+          },
+        }}
+      >
         <Image src={src} title={label} width="100%" objectFit="cover" />
         <Box
           width="100%"

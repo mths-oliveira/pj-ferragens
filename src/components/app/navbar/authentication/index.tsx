@@ -4,6 +4,7 @@ import { SignOut } from './sign-out';
 import { Modal, DisclosureProps } from '../../../modal';
 import { CloseButton } from '../../../close-button';
 import { useUserContext } from '../../../../contexts/user';
+import { useEffect } from 'react';
 
 const childrens = {
   SIGN_IN: <SignIn />,
@@ -13,6 +14,12 @@ const childrens = {
 
 export function Authentication({ isOpen, onClose }: DisclosureProps) {
   const userContext = useUserContext();
+
+  useEffect(() => {
+    if (userContext.authenticationScreen === 'SIGN_OUT') {
+      onClose();
+    }
+  }, [userContext.authenticationScreen]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
