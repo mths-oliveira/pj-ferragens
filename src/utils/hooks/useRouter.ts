@@ -17,7 +17,6 @@ export function useRouter(): Router {
 
   function setPath(path: string, isShallow = false) {
     router.push(path, null, {
-      shallow: isShallow,
       scroll: !isShallow,
     });
   }
