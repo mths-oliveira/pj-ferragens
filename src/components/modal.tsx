@@ -32,7 +32,7 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
       >
         <ModalBody
           padding="0"
-          maxHeight="calc(100vh - 4.5rem)"
+          maxHeight="calc(100vh - 3.5rem)"
           overflowY="auto"
         >
           {children}
