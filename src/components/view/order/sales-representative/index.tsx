@@ -21,6 +21,7 @@ import { useUserContext } from '../../../../contexts/user';
 import { currency } from '../../../../utils/mask/currency';
 import { api } from '../../../../config/api';
 import { Order } from '../../../../backend/services/send-sales-representative-email-service';
+import { useRouter } from '../../../../utils/hooks/useRouter';
 
 export interface Customer {
   id: string;
@@ -45,6 +46,7 @@ export function OrderSalesRepresentative() {
   const userContext = useUserContext();
   const createToast = useToast(defaultToastOptions);
   const form = useForm(handleSubmit);
+  const router = useRouter();
 
   async function handleSubmit({
     customer,
@@ -74,6 +76,7 @@ export function OrderSalesRepresentative() {
         description: 'O cliente receberá uma cópia do pedido por e-mail.',
       });
       shoppingCart.clear();
+      router.setPath('/');
     } else {
       createToast({
         status: 'error',

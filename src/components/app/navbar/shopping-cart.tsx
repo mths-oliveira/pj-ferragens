@@ -29,8 +29,10 @@ export function ShoppingCart({ isOpen, onClose, onOpen }: ShoppingCartProps) {
   useEffect(() => {
     const storageProducts = shoppingCartStorage.find();
     shoppingCart.products = serializeProducts(storageProducts);
-    shoppingCart.subscribe(onOpen);
     shoppingCart.subscribe(render);
+    shoppingCart.subscribe((products) => {
+      !products || isEmpty(products) ? onClose() : onOpen();
+    });
   }, []);
 
   useEffect(() => {

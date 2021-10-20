@@ -41,7 +41,8 @@ export class ShoppingCart extends Observer<Product[]> {
   }
 
   clear() {
-    this.products = [];
+    this._products = [];
+    this._notfyAll(this._products);
   }
 
   get subtotal() {

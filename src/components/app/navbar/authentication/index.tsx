@@ -22,7 +22,7 @@ export function Authentication({ isOpen, onClose }: DisclosureProps) {
   }, [userContext.authenticationScreen]);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <CloseButton onClick={onClose} />
       {childrens[userContext.authenticationScreen]}
     </Modal>
