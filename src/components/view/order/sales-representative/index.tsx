@@ -69,6 +69,7 @@ export function OrderSalesRepresentative() {
       customer,
       order,
     });
+    await api.post('/customers', customer);
     if (response.status === 200) {
       createToast({
         status: 'success',

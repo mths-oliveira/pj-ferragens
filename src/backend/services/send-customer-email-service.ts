@@ -9,6 +9,7 @@ export class SendCustomerEmailService {
     const html = createCustomerEmail(customer, products);
     await transporter.sendMail({
       subject: 'Contato através do site: www.pjferragens.com.br',
+      from: process.env.SENDER_EMAIL,
       to: process.env.RECIPIENT_EMAIL,
       replyTo: customer.email,
       html,

@@ -14,14 +14,14 @@ interface Props extends DisclosureProps {}
 export function Search({ isOpen, onClose }: Props) {
   const router = useRouter();
   const products = useProductsContext();
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filteredProducts, setFilteredProducts] = useState(products);
+  const [searchTerm, setSearchTerm] = useState<string>();
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(onClose, [router.query.ref]);
-  useEffect(resetFilteredProducts, [isOpen]);
+  useEffect(resetSearchTerm, [isOpen]);
 
-  function resetFilteredProducts() {
-    setFilteredProducts(products);
+  function resetSearchTerm() {
+    setSearchTerm('');
   }
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {

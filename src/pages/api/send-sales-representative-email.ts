@@ -24,7 +24,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
       salesRepresentative
     );
     return res.status(200).end();
-  } catch (_) {
+  } catch (err) {
     return res.status(404).end();
   }
 }
