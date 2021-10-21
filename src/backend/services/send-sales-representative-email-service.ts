@@ -21,7 +21,6 @@ export class SendSalesRepresentativeEmailService {
     );
     await transporter.sendMail({
       subject: 'Contato através do site: www.pjferragens.com.br',
-      from: process.env.SENDER_EMAIL,
       to: [process.env.RECIPIENT_EMAIL, customer.email],
       replyTo: customer.email,
       html,

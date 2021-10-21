@@ -1,4 +1,4 @@
-import { google, sheets_v4 } from 'googleapis';
+import { google } from 'googleapis';
 import credentials from '../../credentials.json';
 
 type MajorDimension = 'COLUMNS' | 'ROWS';
