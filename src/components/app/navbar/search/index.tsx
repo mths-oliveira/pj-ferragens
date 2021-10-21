@@ -14,7 +14,7 @@ interface Props extends DisclosureProps {}
 export function Search({ isOpen, onClose }: Props) {
   const router = useRouter();
   const products = useProductsContext();
-  const [searchTerm, setSearchTerm] = useState<string>();
+  const [searchTerm, setSearchTerm] = useState('0');
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(onClose, [router.query.ref]);
