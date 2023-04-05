@@ -1,25 +1,30 @@
 import { GetStaticPaths, GetStaticProps } from "next"
 import { Grid } from "@chakra-ui/react"
 import { Wrapper } from "../../components/layout/wrapper"
-import { InternalLink } from "../../components/internal-link"
 import { Card } from "../../components/card"
-import { useRouter } from "../../utils/hooks/useRouter"
+import { useSelectedProductContext } from "../../contexts/selected-product"
 import { ProductsRepository } from "../../backend/repositories/products"
+import { useRouter } from "next/router"
+import { Product } from "../../backend/entities/product"
 
-interface Product {
+interface IProduct {
   ref: string
   name: string
-  image: string
   description: string
+  image: string
+  category: string
+  price: number
 }
 
 export interface CategoryProps {
-  products: Product[]
+  products: IProduct[]
+  category: string
 }
+const productsRepository = new ProductsRepository()
 
-export default function Category({ products }: CategoryProps) {
+export default function Category({ products, category }: CategoryProps) {
+  const { setSelectedProduct, productModal } = useSelectedProductContext()
   const router = useRouter()
-
   return (
     <Wrapper overflowX={["auto", "auto", "hidden"]} bg="white" color="gray.md">
       <Grid
@@ -30,18 +35,25 @@ export default function Category({ products }: CategoryProps) {
         gridTemplateColumns="repeat(auto-fill, 15rem)"
       >
         {products.map((product) => (
-          <InternalLink
-            isShallow
+          <Card
             key={product.ref}
-            href={`${router.absolutePath}?ref=${product.ref}`}
-            _hover={{
-              textDecoration: "none",
+            src={product.image}
+            title={product.name}
+            onClick={async () => {
+              const selectedProduct = new Product(
+                product.ref,
+                product.name,
+                product.description,
+                product.image,
+                product.category,
+                product.price
+              )
+              setSelectedProduct(selectedProduct)
+              productModal.onOpen()
             }}
           >
-            <Card src={product.image} title={product.name}>
-              {product.description}
-            </Card>
-          </InternalLink>
+            {product.description}
+          </Card>
         ))}
       </Grid>
     </Wrapper>
@@ -49,18 +61,21 @@ export default function Category({ products }: CategoryProps) {
 }
 
 export const getStaticProps: GetStaticProps<CategoryProps> = async (ctx) => {
-  const productsRepository = new ProductsRepository()
   const category = ctx.params.category as string
   const products = await productsRepository.getProductsByCategory(category)
 
   return {
     props: {
-      products: products.map<Product>((product) => {
+      category,
+      products: products.map<IProduct>((product) => {
         return {
           description: product.description,
           image: product.image,
           name: product.name,
           ref: product.ref,
+
+          category: product.category,
+          price: product.price,
         }
       }),
     },

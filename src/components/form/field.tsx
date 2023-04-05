@@ -3,18 +3,18 @@ import {
   FormLabel,
   FormHelperText,
   FormControlProps,
-} from '@chakra-ui/react';
-import { ReactNode, useState } from 'react';
-import { FieldRef } from '../../utils/hooks/useForm';
+} from "@chakra-ui/react"
+import { ReactNode, useState } from "react"
+import { FieldRef } from "../../utils/hooks/useForm"
 
 interface FieldProps extends FormControlProps {
-  label: string;
-  name: string;
-  isDisabled?: boolean;
-  defaultValue?: string;
-  children: ReactNode;
-  helperText?: string;
-  fieldRef?: (field: FieldRef) => void;
+  label: string
+  name: string
+  isDisabled?: boolean
+  defaultValue?: string
+  children: ReactNode
+  helperText?: string
+  fieldRef?: (field: FieldRef) => void
 }
 
 export function Field({
@@ -26,31 +26,36 @@ export function Field({
   helperText,
   ...rest
 }: FieldProps) {
-  const [value, setValue] = useState(defaultValue || '');
+  const [value, setValue] = useState(defaultValue || "")
 
   return (
     <FormControl
       ref={fieldRef}
-      value={isDisabled ? '' : value}
+      value={isDisabled ? "" : value}
       isDisabled={isDisabled}
       opacity={isDisabled ? 0.5 : 1}
-      color="gray.md"
+      color="#575958"
       fontWeight="500"
       onChange={(event) => {
-        const input = event.target as HTMLInputElement;
-        setValue(input.value);
+        const input = event.target as HTMLInputElement
+        setValue(input.value)
       }}
       onBlur={(event) => {
-        const input = event.target as HTMLInputElement;
-        setValue(input.value);
+        const input = event.target as HTMLInputElement
+        setValue(input.value)
       }}
       {...rest}
     >
       <FormLabel>{label}</FormLabel>
       {children}
-      {helperText && (
-        <FormHelperText marginBottom="0.25rem">{helperText}</FormHelperText>
-      )}
+
+      <FormHelperText
+        color="#575958"
+        marginBottom="0.25rem"
+        display={!!helperText ? "inline" : "none"}
+      >
+        {helperText}
+      </FormHelperText>
     </FormControl>
-  );
+  )
 }

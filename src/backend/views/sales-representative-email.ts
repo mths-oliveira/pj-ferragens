@@ -1,16 +1,16 @@
-import { formatToBrazilianString, getDate } from '../../utils/getData';
-import { currency } from '../../utils/mask/currency';
-import { serializeProducts } from '../../utils/serialize-products';
-import { Customer } from '../entities/customer';
-import { User } from '../entities/user';
-import { Order } from '../services/send-sales-representative-email-service';
+import { formatToBrazilianString, getDate } from "../../utils/getData"
+import { currency } from "../../utils/mask/currency"
+import { serializeProducts } from "../../utils/serialize-products"
+import { Customer } from "../entities/customer"
+import { User } from "../entities/user"
+import { Order } from "../services/send-sales-representative-email-service"
 
 export function createSalesRepresentativeEmail(
   customer: Customer,
   order: Order,
   salesRepresentative: User
 ) {
-  const date = formatToBrazilianString(getDate());
+  const date = formatToBrazilianString(getDate())
   const products = serializeProducts(order.products).map(
     (product) =>
       `<tr style="background-color: #ffffff">
@@ -22,7 +22,7 @@ export function createSalesRepresentativeEmail(
           product.subtotal
         )}</td>
       </tr>`
-  );
+  )
   return `<div
   style="
     font-family: Arial, Helvetica, sans-serif;
@@ -68,7 +68,7 @@ export function createSalesRepresentativeEmail(
           <th style="padding: 8px 16px">Quantidade</th>
           <th style="padding: 8px 16px">Subtotal</th>
         </tr>
-        ${products.join('').replace(/>,/g, '>')}      
+        ${products.join("").replace(/>,/g, ">")}      
       </table>
     </li>
     <li style="margin-top: 1rem">Subtotal: ${order.subtotal}</li>
@@ -77,8 +77,8 @@ export function createSalesRepresentativeEmail(
     ${
       order.observation
         ? `<li style="margin-top: 1rem">Observação: ${order.observation}</li>`
-        : ''
+        : ""
     }    
   </ul>
-</div>`;
+</div>`
 }

@@ -1,43 +1,43 @@
-import { useEffect } from 'react';
-import { SimpleGrid, Text, Stack, Image, Box } from '@chakra-ui/react';
-import { Tag } from '../../tag';
-import { Form } from '../../form';
-import { Button } from '../../button';
-import { Divider } from '../../divider';
-import { Drawer, DisclosureProps } from '../../drawer';
-import { SubmitButton } from '../../form/submit-button';
-import { currency } from '../../../utils/mask/currency';
-import { NumberInput } from '../../form/number-input';
-import { useShoppingCartContext } from '../../../contexts/shopping-cart';
-import { isEmpty } from '../../../utils/is-empty';
-import { useRender } from '../../../utils/hooks/useRender';
-import { useRouter } from '../../../utils/hooks/useRouter';
-import { useStorage } from '../../../utils/hooks/useStorage';
-import { Product } from '../../../backend/entities/product';
-import { serializeProducts } from '../../../utils/serialize-products';
+import { useEffect } from "react"
+import { SimpleGrid, Text, Stack, Image, Box } from "@chakra-ui/react"
+import { Tag } from "../../tag"
+import { Form } from "../../form"
+import { Button } from "../../button"
+import { Divider } from "../../divider"
+import { Drawer, DisclosureProps } from "../../drawer"
+import { SubmitButton } from "../../form/submit-button"
+import { currency } from "../../../utils/mask/currency"
+import { NumberInput } from "../../form/number-input"
+import { useShoppingCartContext } from "../../../contexts/shopping-cart"
+import { isEmpty } from "../../../utils/is-empty"
+import { useRender } from "../../../utils/hooks/useRender"
+import { useRouter } from "../../../utils/hooks/useRouter"
+import { useStorage } from "../../../utils/hooks/useStorage"
+import { Product } from "../../../backend/entities/product"
+import { serializeProducts } from "../../../utils/serialize-products"
 
 interface ShoppingCartProps extends DisclosureProps {
-  onOpen: () => void;
+  onOpen: () => void
 }
 
 export function ShoppingCart({ isOpen, onClose, onOpen }: ShoppingCartProps) {
-  const render = useRender();
-  const router = useRouter();
-  const shoppingCart = useShoppingCartContext();
-  const shoppingCartStorage = useStorage<Product[]>('shopping-cart');
+  const render = useRender()
+  const router = useRouter()
+  const shoppingCart = useShoppingCartContext()
+  const shoppingCartStorage = useStorage<Product[]>("shopping-cart")
 
   useEffect(() => {
-    const storageProducts = shoppingCartStorage.find();
-    shoppingCart.products = serializeProducts(storageProducts);
-    shoppingCart.subscribe(render);
+    const storageProducts = shoppingCartStorage.find()
+    shoppingCart.products = serializeProducts(storageProducts)
+    shoppingCart.subscribe(render)
     shoppingCart.subscribe((products) => {
-      !products || isEmpty(products) ? onClose() : onOpen();
-    });
-  }, []);
+      !products || isEmpty(products) ? onClose() : onOpen()
+    })
+  }, [])
 
   useEffect(() => {
-    shoppingCartStorage.save(shoppingCart.products);
-  }, [isOpen]);
+    shoppingCartStorage.save(shoppingCart.products)
+  }, [isOpen])
 
   return (
     <Drawer
@@ -51,8 +51,8 @@ export function ShoppingCart({ isOpen, onClose, onOpen }: ShoppingCartProps) {
       <Box as="header" position="sticky" top="0" zIndex="100" bg="white">
         <Form
           onSubmit={() => {
-            router.setPath('/pedidos');
-            onClose();
+            router.setPath("/pedidos")
+            onClose()
           }}
         >
           <Stack spacing="1rem">
@@ -104,8 +104,8 @@ export function ShoppingCart({ isOpen, onClose, onOpen }: ShoppingCartProps) {
               <NumberInput
                 initialValue={product.amount}
                 onChangeValue={(value) => {
-                  product.amount = value;
-                  render();
+                  product.amount = value
+                  render()
                 }}
               />
             </Stack>
@@ -113,7 +113,7 @@ export function ShoppingCart({ isOpen, onClose, onOpen }: ShoppingCartProps) {
               <Text fontSize="xs">Ações</Text>
               <Button
                 onClick={() => {
-                  shoppingCart.remove(product.ref);
+                  shoppingCart.remove(product.ref)
                 }}
               >
                 Remover
@@ -123,5 +123,5 @@ export function ShoppingCart({ isOpen, onClose, onOpen }: ShoppingCartProps) {
         ))}
       </Stack>
     </Drawer>
-  );
+  )
 }

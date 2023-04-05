@@ -9,7 +9,7 @@ export interface Client {
 }
 
 export async function createGoogleClient(tableName: string): Promise<Client> {
-  const spreadsheetId = "1FzHP-UMZbA4yVTUfIAiYcaA0QDjHgNXqHPF2hg1zruo"
+  const spreadsheetId = "1VyColEKAHtZhq6TRevYk1O0rFEaHdwgclnNHYNVBDtY"
   const auth = new google.auth.GoogleAuth({
     credentials,
     scopes: "https://www.googleapis.com/auth/spreadsheets",

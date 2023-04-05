@@ -4,49 +4,33 @@ import {
   ReactNode,
   useState,
   useEffect,
-} from 'react';
-import { Product } from '../backend/entities/product';
-import { api } from '../config/api';
-import { useStorage } from '../utils/hooks/useStorage';
-import { isEmpty } from '../utils/is-empty';
-import { serializeProducts } from '../utils/serialize-products';
-import { SelectedProductContextProvider } from './selected-product';
+} from "react"
+import { Product } from "../backend/entities/product"
+import { api } from "../config/api"
+
+import { SelectedProductContextProvider } from "./selected-product"
 
 interface ProductsProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
-const ProductsContext = createContext([] as Product[]);
+const ProductsContext = createContext([] as Product[])
 
 export function ProductsContextProvider({ children }: ProductsProps) {
-  const [products, setProducts] = useState<Product[]>([]);
-  const productsStorage = useStorage<Product[]>('products-list');
+  const [products, setProducts] = useState<Product[]>([])
 
   useEffect(() => {
-    (async () => {
-      let products = getStorageProducts();
-      if (!products || isEmpty(products)) {
-        products = await getApiProducts();
-      }
-      setProducts(products);
-    })();
-  }, []);
-
-  function getStorageProducts() {
-    const storageProducts = productsStorage.find();
-    const products = serializeProducts(storageProducts);
-    return products;
-  }
+    ;(async () => {
+      const products = await getApiProducts()
+      setProducts(products)
+    })()
+  }, [])
 
   async function getApiProducts() {
-    const response = await api.get<Product[]>('/products');
-    const products = serializeProducts(response.data);
-    return products;
-  }
+    const response = await api.get<Product[]>("/products")
 
-  useEffect(() => {
-    productsStorage.save(products);
-  }, [products]);
+    return response.data
+  }
 
   return (
     <ProductsContext.Provider value={products}>
@@ -54,10 +38,10 @@ export function ProductsContextProvider({ children }: ProductsProps) {
         {children}
       </SelectedProductContextProvider>
     </ProductsContext.Provider>
-  );
+  )
 }
 
 export function useProductsContext() {
-  const products = useContext(ProductsContext);
-  return products;
+  const products = useContext(ProductsContext)
+  return products
 }

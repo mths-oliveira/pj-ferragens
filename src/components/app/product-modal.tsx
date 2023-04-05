@@ -1,52 +1,31 @@
-import { useEffect } from 'react';
-import {
-  useDisclosure,
-  Image,
-  Stack,
-  Text,
-  SimpleGrid,
-} from '@chakra-ui/react';
-import { Modal } from '../modal';
-import { Form } from '../form';
-import { Tag } from '../tag';
-import { CloseButton } from '../close-button';
-import { NumberInput } from '../form/number-input';
-import { SubmitButton } from '../form/submit-button';
-import { currency } from '../../utils/mask/currency';
-import { useRender } from '../../utils/hooks/useRender';
-import { useRouter } from '../../utils/hooks/useRouter';
-import { useShoppingCartContext } from '../../contexts/shopping-cart';
-import { useSelectedProductContext } from '../../contexts/selected-product';
+import { useEffect } from "react"
+import { useDisclosure, Image, Stack, Text, SimpleGrid } from "@chakra-ui/react"
+import { Modal } from "../modal"
+import { Form } from "../form"
+import { Tag } from "../tag"
+import { CloseButton } from "../close-button"
+import { NumberInput } from "../form/number-input"
+import { SubmitButton } from "../form/submit-button"
+import { currency } from "../../utils/mask/currency"
+import { useRender } from "../../utils/hooks/useRender"
+import { useRouter } from "../../utils/hooks/useRouter"
+import { useShoppingCartContext } from "../../contexts/shopping-cart"
+import { useSelectedProductContext } from "../../contexts/selected-product"
 
 export function ProductModal() {
-  const render = useRender();
-  const router = useRouter();
-  const productModal = useDisclosure();
-  const product = useSelectedProductContext();
-  const shoppingCart = useShoppingCartContext();
-
-  useEffect(() => {
-    shoppingCart.subscribe(onClose);
-  }, []);
-
-  function onClose() {
-    productModal.onClose();
-    router.setPath(router.absolutePath, true);
-  }
-
-  useEffect(() => {
-    if (product) {
-      productModal.onOpen();
-    }
-  }, [product]);
+  const render = useRender()
+  const { productModal } = useSelectedProductContext()
+  const { selectedProduct: product } = useSelectedProductContext()
+  const shoppingCart = useShoppingCartContext()
 
   return (
-    <Modal isOpen={productModal.isOpen} onClose={onClose}>
-      <CloseButton onClick={onClose} />
+    <Modal isOpen={productModal.isOpen} onClose={productModal.onClose}>
+      <CloseButton onClick={productModal.onClose} />
       {product && (
         <Form
           onSubmit={() => {
-            shoppingCart.add(product);
+            shoppingCart.add(product)
+            productModal.onClose()
           }}
         >
           <Stack spacing="2.25rem">
@@ -74,8 +53,8 @@ export function ProductModal() {
                   focusInputWhenOpening
                   initialValue={product.amount}
                   onChangeValue={(value) => {
-                    product.amount = value;
-                    render();
+                    product.amount = value
+                    render()
                   }}
                 />
               </Stack>
@@ -89,5 +68,5 @@ export function ProductModal() {
         </Form>
       )}
     </Modal>
-  );
+  )
 }

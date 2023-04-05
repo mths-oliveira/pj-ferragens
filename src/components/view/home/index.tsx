@@ -1,10 +1,15 @@
-import { Grid } from "@chakra-ui/react"
+import { Grid, useColorMode } from "@chakra-ui/react"
 import { Wrapper } from "../../../components/layout/wrapper"
 import { Heading } from "../../../components/heading"
 import { LinkWithImage } from "./link-with-image"
 import categories from "../../../../categories.json"
+import { useEffect } from "react"
 
 export function Home() {
+  const { setColorMode } = useColorMode()
+  useEffect(() => {
+    setColorMode("light")
+  }, [])
   return (
     <Wrapper color="gray.md" bg="white">
       <Heading textAlign={{ lg: "center" }} as="h1">

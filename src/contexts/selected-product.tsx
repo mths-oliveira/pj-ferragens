@@ -1,48 +1,35 @@
-import {
-  createContext,
-  useContext,
-  ReactNode,
-  useEffect,
-  useState,
-} from 'react';
-import { Product } from '../backend/entities/product';
-import { useRouter } from '../utils/hooks/useRouter';
-import { useProductsContext } from './products';
+import { useDisclosure, UseDisclosureProps } from "@chakra-ui/react"
+import { createContext, useContext, ReactNode, useState } from "react"
+import { Product } from "../backend/entities/product"
 
 interface SelectedProductProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
-const product = new Product('', '', '', '', 0, false);
-const SelectedProductContext = createContext(product);
+interface Context {
+  productModal: UseDisclosureProps
+  selectedProduct: Product
+  setSelectedProduct: (product: Product) => void
+}
+
+const SelectedProductContext = createContext<Context>({} as any)
 
 export function SelectedProductContextProvider({
   children,
 }: SelectedProductProps) {
-  const router = useRouter();
-  const products = useProductsContext();
-  const [selectedProduct, setSelectedProduct] = useState<Product>(null);
-
-  useEffect(() => {
-    const product = findProductByRef(router.query.ref);
-    setSelectedProduct(product);
-  }, [router.query.ref]);
-
-  function findProductByRef(ref: string) {
-    const product = products.find((product) => {
-      return product.ref === ref;
-    });
-    return product;
-  }
+  const productModal = useDisclosure()
+  const [selectedProduct, setSelectedProduct] = useState<Product>(null)
 
   return (
-    <SelectedProductContext.Provider value={selectedProduct}>
+    <SelectedProductContext.Provider
+      value={{ selectedProduct, setSelectedProduct, productModal }}
+    >
       {children}
     </SelectedProductContext.Provider>
-  );
+  )
 }
 
 export function useSelectedProductContext() {
-  const selectedProduct = useContext(SelectedProductContext);
-  return selectedProduct;
+  const selectedProduct = useContext(SelectedProductContext)
+  return selectedProduct
 }

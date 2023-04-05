@@ -1,18 +1,18 @@
-import { formatToBrazilianString, getDate } from '../../utils/getData';
-import { currency } from '../../utils/mask/currency';
-import { serializeProducts } from '../../utils/serialize-products';
-import { Customer } from '../entities/customer';
-import { Product } from '../entities/product';
+import { formatToBrazilianString, getDate } from "../../utils/getData"
+import { currency } from "../../utils/mask/currency"
+import { serializeProducts } from "../../utils/serialize-products"
+import { Customer } from "../entities/customer"
+import { Product } from "../entities/product"
 
 export function createCustomerEmail(customer: Customer, products: Product[]) {
-  const date = formatToBrazilianString(getDate());
+  const date = formatToBrazilianString(getDate())
   const listForBudget = serializeProducts(products).map(
     (product) =>
       `<tr style="background-color: #ffffff">
         <td style="white-space: nowrap; padding: 8px 16px">${product.ref}</td>
         <td style="white-space: nowrap; padding: 8px 16px">${product.amount}</td>
       </tr>`
-  );
+  )
   return `<div
   style="
     font-family: Arial, Helvetica, sans-serif;
@@ -55,9 +55,9 @@ export function createCustomerEmail(customer: Customer, products: Product[]) {
           <th style="padding: 8px 16px">Referência</th>
           <th style="padding: 8px 16px">Quantidade</th>          
         </tr>
-        ${listForBudget.join('').replace(/>,/g, '>')}      
+        ${listForBudget.join("").replace(/>,/g, ">")}      
       </table>
     </li>
   </ul>
-</div>`;
+</div>`
 }
