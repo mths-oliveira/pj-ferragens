@@ -1,8 +1,12 @@
-import { Center } from '@chakra-ui/react';
-import { useShoppingCartContext } from '../../../contexts/shopping-cart';
+import { Center } from "@chakra-ui/react"
+import { useProductsContext } from "../../../contexts/products"
+
+import { useShoppingCartContext } from "../../../contexts/shopping-cart"
 
 export function ProductCounter() {
-  const shoppingCart = useShoppingCartContext();
+  const shoppingCart = useShoppingCartContext()
+  const products = useProductsContext()
+  console.log(products)
   return (
     <Center
       as="span"
@@ -15,7 +19,7 @@ export function ProductCounter() {
       borderRadius="md"
       marginLeft=".5rem"
     >
-      {String(shoppingCart?.products.length).padStart(2, '0')}
+      {String(shoppingCart?.products.length).padStart(2, "0")}
     </Center>
-  );
+  )
 }

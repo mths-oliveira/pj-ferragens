@@ -13,8 +13,7 @@ import { isEmpty } from "../../../utils/is-empty"
 import { useRender } from "../../../utils/hooks/useRender"
 import { useRouter } from "../../../utils/hooks/useRouter"
 import { useStorage } from "../../../utils/hooks/useStorage"
-import { Product } from "../../../backend/entities/product"
-import { serializeProducts } from "../../../utils/serialize-products"
+import { useProductsContext } from "../../../contexts/products"
 
 interface ShoppingCartProps extends DisclosureProps {
   onOpen: () => void
@@ -24,20 +23,28 @@ export function ShoppingCart({ isOpen, onClose, onOpen }: ShoppingCartProps) {
   const render = useRender()
   const router = useRouter()
   const shoppingCart = useShoppingCartContext()
-  const shoppingCartStorage = useStorage<Product[]>("shopping-cart")
+  const shoppingCartStorage = useStorage<string[]>("shopping-cart")
+  const products = useProductsContext()
 
   useEffect(() => {
-    const storageProducts = shoppingCartStorage.find()
-    shoppingCart.products = serializeProducts(storageProducts)
     shoppingCart.subscribe(render)
+    shoppingCart.subscribe((products) => {
+      const refs = products.map((product) => {
+        return product.ref
+      })
+      shoppingCartStorage.save(refs)
+    })
     shoppingCart.subscribe((products) => {
       !products || isEmpty(products) ? onClose() : onOpen()
     })
   }, [])
 
   useEffect(() => {
-    shoppingCartStorage.save(shoppingCart.products)
-  }, [isOpen])
+    const storageProductRefs = shoppingCartStorage.find()
+    shoppingCart.products = products.filter((product) => {
+      return storageProductRefs.includes(product.ref)
+    })
+  }, [products])
 
   return (
     <Drawer

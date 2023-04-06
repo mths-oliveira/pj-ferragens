@@ -65,6 +65,8 @@ export function Search({ isOpen, onClose }: Props) {
                 isShallow
                 key={product.ref}
                 onClick={() => {
+                  onClose()
+                  product.subtotal = product._amount * product.price
                   setSelectedProduct(product)
                   productModal.onOpen()
                 }}
