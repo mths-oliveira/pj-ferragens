@@ -1,7 +1,7 @@
 {
   "private": true,
   "engines": {
-    "node": "latest"
+    "node": "18.x"
   },
   "scripts": {
     "dev": "next",
