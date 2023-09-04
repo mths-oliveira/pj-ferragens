@@ -1,5 +1,8 @@
 {
   "private": true,
+  "engines": {
+    "node": "latest"
+  },
   "scripts": {
     "dev": "next",
     "build": "next build",
