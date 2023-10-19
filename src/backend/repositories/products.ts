@@ -1,7 +1,7 @@
 import { createGoogleClient } from "../../config/create-google-client"
 import { removeAccent } from "../../utils/remove-accent"
 import { createProduct } from "../entities/product"
-import { getImageSrc } from "../../utils/get-image-src"
+import productImages from "../../../productImages.json"
 export class ProductRepository {
   async find(category?: string) {
     const productClient = await createGoogleClient("Produtos")
@@ -12,7 +12,7 @@ export class ProductRepository {
         ref,
         name,
         description,
-        image,
+        _,
         price,
         rate,
         productCategory,
@@ -26,7 +26,8 @@ export class ProductRepository {
         if (category !== query) continue
       }
       const priceWithRate = Float(price) + (Float(price) / 100) * Float(rate)
-      const src = getImageSrc(productCategory, ref)
+      const src = productImages[ref]
+
       const product = createProduct(ref, name, description, src, priceWithRate)
       products.push(product)
     }
