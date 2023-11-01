@@ -26,8 +26,11 @@ export class ProductRepository {
         if (category !== query) continue
       }
       const priceWithRate = Float(price) + (Float(price) / 100) * Float(rate)
-      const src = productImages[ref]
-
+      let src = productImages[ref]
+      if (!src) {
+        src = ""
+        console.log(ref)
+      }
       const product = createProduct(ref, name, description, src, priceWithRate)
       products.push(product)
     }
