@@ -83,7 +83,6 @@ export default function () {
               products,
             },
           })
-          return
           if (response.status === 200) {
             toast({
               status: "success",
