@@ -1,7 +1,14 @@
 import { currencyMask } from "../../utils/currency-mask"
 import { Customer } from "../entities/customer"
 import { User } from "../entities/user"
-import { Order } from "../services/send-sales-representative-email-service"
+
+interface Order {
+  payment: string
+  term: string
+  discount: string
+  observation: string
+  products: any[]
+}
 
 export function createSalesRepresentativeEmail(
   customer: Customer,
@@ -16,18 +23,18 @@ export function createSalesRepresentativeEmail(
     hour: "2-digit",
     minute: "2-digit",
   })
-  order.products.map(
-    (product) =>
-      `<tr style="background-color: #ffffff">
-        <td style="white-space: nowrap; padding: 8px 16px">${product.ref}</td>
-        <td style="white-space: nowrap; padding: 8px 16px">${
-          product.amount
-        }</td>
-        <td style="white-space: nowrap; padding: 8px 16px">${currencyMask(
-          product.subtotal
-        )}</td>
-      </tr>`
-  )
+  const products = order.products
+    .map(
+      (product) =>
+        `<tr style="background-color: #ffffff">
+      <td style="white-space: nowrap; padding: 8px 16px">${product.ref}</td>
+      <td style="white-space: nowrap; padding: 8px 16px">${product.amount}</td>
+      <td style="white-space: nowrap; padding: 8px 16px">${currencyMask(
+        product.subtotal
+      )}</td>
+  </tr>`
+    )
+    .join("")
   return `<div
   style="
     font-family: Arial, Helvetica, sans-serif;
@@ -73,12 +80,15 @@ export function createSalesRepresentativeEmail(
           <th style="padding: 8px 16px">Quantidade</th>
           <th style="padding: 8px 16px">Subtotal</th>
         </tr>
-        ${order.products.join("").replace(/>,/g, ">")}      
+        ${products}      
       </table>
     </li>
-    <li style="margin-top: 1rem">Subtotal: ${order.subtotal}</li>
     <li style="margin-top: 1rem">Prazo: ${order.term}</li>    
-    <li style="margin-top: 1rem">Forma de pagamento: ${order.method}</li>
+    <li style="margin-top: 1rem">Forma de pagamento: ${order.payment}</li>
+    ${
+      order.discount &&
+      `<li style="margin-top: 1rem">Desconto: ${order.discount}%</li>`
+    }
     ${
       order.observation
         ? `<li style="margin-top: 1rem">Observação: ${order.observation}</li>`
