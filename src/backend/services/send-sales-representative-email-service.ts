@@ -4,14 +4,13 @@ import { Customer } from "../entities/customer"
 import { User } from "../entities/user"
 import { createSalesRepresentativeEmail } from "../views/sales-representative-email"
 
-export interface Order {
-  products: Product[]
-  method: string
-  observation: string
+interface Order {
+  payment: string
   term: string
-  subtotal: string
+  discount: string
+  observation: string
+  products: any[]
 }
-
 export class SendSalesRepresentativeEmailService {
   async handle(customer: Customer, order: Order, salesRepresentative: User) {
     const html = createSalesRepresentativeEmail(
