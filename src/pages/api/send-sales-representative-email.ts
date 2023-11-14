@@ -1,13 +1,10 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { Customer } from "../../backend/entities/customer"
 import { User } from "../../backend/entities/user"
-import {
-  Order,
-  SendSalesRepresentativeEmailService,
-} from "../../backend/services/send-sales-representative-email-service"
+import { SendSalesRepresentativeEmailService } from "../../backend/services/send-sales-representative-email-service"
 
 interface RequestBody {
-  order: Order
+  order: any
   salesRepresentative: User
   customer: Customer
 }
