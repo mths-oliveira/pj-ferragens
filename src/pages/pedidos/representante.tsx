@@ -83,6 +83,14 @@ export default function () {
               products,
             },
           })
+          console.log({
+            salesRepresentative: user,
+            customer,
+            order: {
+              ...order,
+              products,
+            },
+          })
           if (response.status === 200) {
             toast({
               status: "success",
