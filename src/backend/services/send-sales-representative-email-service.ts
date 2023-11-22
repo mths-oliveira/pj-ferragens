@@ -11,11 +11,14 @@ export class SendSalesRepresentativeEmailService {
       order,
       salesRepresentative
     )
-    await transporter.sendMail({
+    const res = await transporter.sendMail({
       subject: "Contato através do site: www.pjferragens.com.br",
       to: [process.env.RECIPIENT_EMAIL, customer.email],
       replyTo: customer.email,
       html,
     })
+    if (res.rejected) {
+      console.log("error")
+    }
   }
 }
