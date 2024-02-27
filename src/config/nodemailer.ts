@@ -1,7 +1,7 @@
-import nodemailer from 'nodemailer';
+import nodemailer from "nodemailer"
 
 export const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
+  host: "smtp.gmail.com",
   from: process.env.SENDER_EMAIL,
   auth: {
     user: process.env.SENDER_EMAIL,
@@ -10,4 +10,4 @@ export const transporter = nodemailer.createTransport({
   tls: {
     rejectUnauthorized: false,
   },
-});
+})
