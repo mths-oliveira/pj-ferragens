@@ -13,7 +13,7 @@ export async function fetchProducts(): Promise<ProductResponse[]> {
     const products = records.map(serializeProduct);
     return products;
   } catch (error) {
-    console.log("erro ao buscar os produtos no google sheets", error);
+    throw new Error("erro ao buscar os produtos no google sheets", error);
     return [];
   }
 }
