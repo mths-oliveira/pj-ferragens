@@ -42,11 +42,15 @@ export default function Page() {
         toast({
           variant: "destructive",
           title: "Erro ao enviar e-mail",
-          description: error,
+          description: String(error),
         });
       }
     } catch (error) {
-      console.error("Erro ao fazer a requisição:", error);
+      toast({
+        variant: "destructive",
+        title: "Erro ao enviar e-mail",
+        description: error instanceof Error ? error.message : String(error),
+      });
     }
     setIsLoad(false);
   }
