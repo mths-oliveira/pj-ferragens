@@ -1,12 +1,14 @@
 import { google } from "googleapis";
-import { OAuth2Client } from "google-auth-library";
 
-export function getGoogleAuthJWT(scopes: string | string[]): OAuth2Client {
-  const auth = new google.auth.JWT({
-    scopes,
-    email: process.env.CLIENT_EMAIL,
-    key: process.env.PRIVATE_KEY,
+const GOOGLE_CREDENTIALS = process.env.GOOGLE_CREDENTIALS || "";
+export function getGoogleAuthJWT(scopes: string | string[]) {
+  const auth = new google.auth.GoogleAuth({
+    credentials: JSON.parse(
+      Buffer.from(GOOGLE_CREDENTIALS, "base64").toString("utf-8")
+    ),
+    scopes: ["https://www.googleapis.com/auth/spreadsheets.readonly"],
   });
+
   return auth;
 }
 
