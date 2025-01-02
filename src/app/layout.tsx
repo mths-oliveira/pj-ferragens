@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "../styles/globals.css";
 import "../styles/fonts.css";
-import { getData } from "@/data";
+import { fetchData, getData } from "@/data";
 import { ShoppingCartProvider } from "@/context/shopping-cart";
 import { Navbar } from "./_components/layout/navbar";
 import { Footer } from "./_components/layout/footer";
@@ -17,7 +17,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { pageNavigationDataList, pageDataList } = await getData();
+  const { pageNavigationDataList, pageDataList } = await fetchData();
 
   return (
     <html lang="en">
