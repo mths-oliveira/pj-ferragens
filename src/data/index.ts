@@ -26,7 +26,7 @@ export async function getData(): Promise<Data> {
   return data;
 }
 
-export async function fetchData(): Promise<Data> {
+async function fetchData(): Promise<Data> {
   const products = await fetchProducts();
   const productsByCategory = groupProductsByCategory(products);
   const sectionsByCategory =
