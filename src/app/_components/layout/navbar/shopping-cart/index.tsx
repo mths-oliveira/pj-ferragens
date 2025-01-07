@@ -54,7 +54,6 @@ function NumberInput(props: NumberInputProps) {
       ["ArrowDown", subtract],
       ["ArrowLeft", null],
       ["ArrowRight", null],
-      ["Enter", null],
       [
         "ArrowUp",
         () => {
@@ -106,6 +105,7 @@ export function ShoppingCart() {
   const { products, updateProductAmount, removeProduct } = useShoppingCart();
   const openRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -136,11 +136,18 @@ export function ShoppingCart() {
     closeRef.current?.click();
   }
 
-  function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+  function handleClick() {
     if (products.length > 0) {
       router.push("/orcamento");
     }
     onClose();
+  }
+
+  function handleKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      buttonRef.current?.focus();
+    }
   }
 
   const isButtonDisabled = products.length === 0;
@@ -149,15 +156,16 @@ export function ShoppingCart() {
       <SheetTrigger className="justify-self-end" ref={openRef}>
         <ShoppingCartButton productsAmount={products.length} />
       </SheetTrigger>
-      <SheetContent className="w-[216px] p-0">
+      <SheetContent className="w-[216px] p-0" onKeyDown={handleKeyDown}>
         <SheetHeader className="p-6 flex flex-col items-center gap-1">
           <SheetTitle className="hidden">Carrinho de compras</SheetTitle>
           <p className="text-sm text-gray-600">Solicite já seu orçamento!</p>
           <SheetClose className="hidden" ref={closeRef} />
           <Button
-            onClick={(e) => {
+            ref={buttonRef}
+            onClick={() => {
               if (isButtonDisabled) return;
-              handleClick(e);
+              handleClick();
             }}
             className={`w-full bg-primary text-white font-semibold uppercase text-sm ${
               isButtonDisabled && "hover:cursor-not-allowed opacity-50"
