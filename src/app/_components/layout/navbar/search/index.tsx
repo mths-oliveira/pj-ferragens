@@ -81,7 +81,7 @@ export function Search({ pageDataList }: Props) {
           </div>
         </DialogTrigger>
       )}
-      <DialogContent className="overflow-hidden p-0 gap-0 md:max-h-[calc(100vh-7rem)]">
+      <DialogContent className="overflow-hidden p-0 gap-0 max-h-[calc(100vh-2rem)] md:max-h-[calc(100vh-7rem)]">
         <DialogHeader>
           <DialogTitle className="hidden">Pesquisar</DialogTitle>
           <div className="h-14 flex items-center px-4">

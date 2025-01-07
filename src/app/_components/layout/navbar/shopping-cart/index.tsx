@@ -169,7 +169,7 @@ export function ShoppingCart() {
         <div className="flex flex-col p-6 overflow-y-auto max-h-[calc(100vh-128px)]">
           <ul className="flex flex-col gap-9" id="shopping-cart-list">
             {products.map((product) => (
-              <li key={product.id} className="flex flex-col gap-2">
+              <li key={product.id} className="flex flex-col gap-2 h-[172px]">
                 <div className="relative">
                   <Badge
                     className="absolute bg-primary text-white -top-2 -right-1 py-1 px-1.5 hover:bg-primary"
@@ -177,12 +177,15 @@ export function ShoppingCart() {
                   >
                     {product.id}
                   </Badge>
-                  <Image
-                    alt={product.name}
-                    src={product.image}
-                    ratio={11.125 / 16}
-                    width={148}
-                  />
+                  <div className="h-[104px]">
+                    <Image
+                      alt={product.name}
+                      src={product.image}
+                      ratio={11.125 / 16}
+                      width={148}
+                      className="object-contain h-full"
+                    />
+                  </div>
                 </div>
                 <div className="flex justify-between items-end gap-2">
                   <div className="flex flex-col items-center gap-1">

@@ -23,12 +23,13 @@ export function ProductCard({ product, className }: ProductCardProps) {
   const { addProduct } = useShoppingCart();
   return (
     <Card className={cn("w-64 md:w-72 h-full flex flex-col", className)}>
-      <CardHeader className="p-5">
+      <CardHeader className="p-5 h-[212px]">
         <Image
           src={product.image}
           alt={product.name}
           width={288}
           ratio={11.125 / 16}
+          className="object-contain h-full"
         />
       </CardHeader>
       <CardContent className="p-0 px-5 grow flex flex-col">

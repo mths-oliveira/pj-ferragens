@@ -1,7 +1,7 @@
 import { google } from "googleapis";
 
 const GOOGLE_CREDENTIALS = process.env.GOOGLE_CREDENTIALS || "";
-export function getGoogleAuthJWT(scopes: string | string[]) {
+export function getGoogleAuthJWT() {
   const auth = new google.auth.GoogleAuth({
     credentials: JSON.parse(
       Buffer.from(GOOGLE_CREDENTIALS, "base64").toString("utf-8")
@@ -13,9 +13,7 @@ export function getGoogleAuthJWT(scopes: string | string[]) {
 }
 
 export function createGoogleSheetsClient(spreadsheetId: string) {
-  const auth = getGoogleAuthJWT([
-    "https://www.googleapis.com/auth/spreadsheets",
-  ]);
+  const auth = getGoogleAuthJWT();
 
   const client = google.sheets({
     version: "v4",

@@ -17,7 +17,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { pageNavigationDataList, pageDataList } = await fetchData();
+  const { pageNavigationDataList, pageDataList } = await getData();
 
   return (
     <html lang="en">
