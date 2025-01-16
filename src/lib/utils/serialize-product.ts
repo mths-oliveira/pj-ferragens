@@ -8,7 +8,7 @@ export function serializeProduct(productRecord: string[]): ProductResponse {
     name,
     model,
     description,
-    category,
+    category: category.trim(),
     image,
     isAvailable,
   };
